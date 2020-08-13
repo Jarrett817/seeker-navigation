@@ -27,6 +27,11 @@ img {
     overflow: hidden;
 }
 
+body {
+    background-image: url(snow.a1e35415.jpg);
+    background-attachment: fixed;
+}
+
 .nav-header {
     margin: 30px 20px 30px 20px;
 }
@@ -181,4 +186,4 @@ img {
     display: block;
 }
 
-/*# sourceMappingURL=style.aca3f6ef.css.map */
+/*# sourceMappingURL=style.47dc83f4.css.map */
