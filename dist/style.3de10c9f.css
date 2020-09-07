@@ -14,10 +14,6 @@ ol {
     list-style: none;
 }
 
-img {
-    max-width: 100%;
-    max-height: 100%;
-}
 
 .icon {
     width: 1em;
@@ -28,7 +24,7 @@ img {
 }
 
 body {
-    background-image: url(snow.a1e35415.jpg);
+    background: #dfecd5;
     background-attachment: fixed;
 }
 
@@ -50,6 +46,7 @@ body {
     margin-left: auto;
     margin-right: auto;
 
+
 }
 
 .searchForm>input {
@@ -57,18 +54,31 @@ body {
     border-radius: 4px;
     border: 1px solid #ddd;
     margin-right: 3px;
-    box-shadow: 2px 2px 9px #B5B8AE;
+    border-radius: 18px;
+    background: #dfecd5;
+    box-shadow: inset 2px 0px 11px #9aa393,
+        inset -4px 0px 10px #ffffff
+}
+
+button:focus {
+    outline: 0;
 }
 
 .searchForm>button {
     white-space: nowrap;
     font-size: 18px;
-    background: #0282B9;
-    color: white;
+    background: #dfecd5;
+    color: #737c7b;
     border: none;
     padding: 6px 10px;
-    border-radius: 4px;
-    box-shadow: 2px 2px 9px #B5B8AE;
+    border-radius: 9px;
+    background: linear-gradient(145deg, #c9d4c0, #effde4);
+    box-shadow: 5px 5px 10px #c9d4c0,
+        -5px -5px 10px #f5ffea;
+}
+
+.searchForm .icon {
+    margin-top: 3px;
 }
 
 .nav-main {
@@ -84,6 +94,7 @@ body {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    color: #737c7b;
 }
 
 @media(min-width:500px) {
@@ -98,13 +109,11 @@ body {
 }
 
 .siteList>li {
-    /* border: 1px solid blue; */
-    /* margin: 5px; */
-    /* margin: 1px */
     margin-bottom: 10px;
-    background: white;
-    box-shadow: 2px 2px 9px #B5B8AE;
-    border-radius: 5%;
+    border-radius: 9px;
+    background: #dfecd5;
+    box-shadow: 5px 5px 15px #b0baa8,
+        -5px -5px 14px #ffffff;
 }
 
 @media(min-width:500px) {
@@ -127,8 +136,7 @@ body {
 .addButton .icon-wrapper .icon {
     width: 66px;
     height: 66px;
-    /* margin-bottom: ; */
-    /* margin: 20px 0px; */
+    padding-top: 6px;
 }
 
 .siteList .addButton .text {
@@ -186,4 +194,4 @@ body {
     display: block;
 }
 
-/*# sourceMappingURL=style.47dc83f4.css.map */
+/*# sourceMappingURL=style.3de10c9f.css.map */
