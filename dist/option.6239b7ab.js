@@ -117,67 +117,19 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"epB2":[function(require,module,exports) {
-var $siteList = $('.siteList');
-var $lastLi = $siteList.find('li.last');
-var x = localStorage.getItem('x');
-var xObject = JSON.parse(x);
-var hashMap = xObject || [{
-  logo: 'A',
-  url: 'https://www.acfun.cn'
-}, {
-  logo: 'B',
-  url: 'https://www.bilibili.com'
-}];
+})({"i8is":[function(require,module,exports) {
+"use strict";
 
-var simplifyUrl = function simplifyUrl(url) {
-  return url.replace('http://', '').replace('https://', '').replace('www.', '').replace(/\/.*/, '');
-};
-
-var render = function render() {
-  $siteList.find('li:not(.last').remove();
-  hashMap.forEach(function (node, index) {
-    var $newLi = $("\n    <li>\n    <div class=\"site\">\n      <div class=\"logo\">".concat(node.logo, "</div>\n        <div class=\"link\">").concat(simplifyUrl(node.url), "</div>\n          <div class=\"close\">\n            <svg class=\"icon\" aria-hidden=\"true\">\n              <use xlink:href=\"#icon-shanchu\"></use>\n            </svg>\n            </div>\n          </div>\n    </li>")).insertBefore($lastLi);
-    $newLi.on('click', function () {
-      window.open(node.url);
-    });
-    $newLi.on('click', '.close', function (e) {
-      e.stopPropagation();
-      hashMap.splice(index, 1);
-      render();
-    });
-  });
-};
-
-render();
-$('.addButton').on('click', function () {
-  var url = window.prompt('请输入你要添加的网站');
-
-  if (url.indexOf('http') !== 0) {
-    url = 'https://' + url;
-  }
-
-  console.log("这是结果" + simplifyUrl(url)[0]);
-  hashMap.push({
-    logo: simplifyUrl(url)[0].toUpperCase(),
-    url: url
-  });
-  render();
-}); //关闭前保存
-
-window.onbeforeunload = function () {
-  var string = JSON.stringify(hashMap);
-  localStorage.setItem('x', string);
-};
-
-$(document).on('keypress', function (e) {
-  var key = e.key;
-
-  for (var i = 0; i < hashMap.length; i++) {
-    if (hashMap[i].logo.toLowerCase() === key) {
-      window.open(hashMap[i].url);
-    }
-  }
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-},{}]},{},["epB2"], null)
-//# sourceMappingURL=main.3bd0d163.js.map
+exports.renderOptions = void 0;
+var $searchForm = $('.searchForm');
+
+var renderOptions = function renderOptions() {
+  var $option = $("\n            <div class=\"visible\">\n             <div class=\"shade\"></div>\n             <div class=\"option-wrapper\">\n                <span>\u4FEE\u6539\u5FEB\u6377\u65B9\u5F0F</span>\n                <span>\u7F51\u5740</span>\n                <input type=\"text\" class=\"url-input\">\n                <div class=\"buttons\">\n                <button class=\"delete\">\u5220\u9664</button>\n                <button class=\"cancel\">\u53D6\u6D88</button>\n                <button class=\"ok\">\u5B8C\u6210</button>\n                </div>\n            </div>\n            </div>\n").insertBefore($searchForm);
+};
+
+exports.renderOptions = renderOptions;
+},{}]},{},["i8is"], null)
+//# sourceMappingURL=option.6239b7ab.js.map
