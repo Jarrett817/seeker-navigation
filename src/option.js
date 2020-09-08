@@ -6,7 +6,7 @@ const renderOptions = () => {
              <div class="option-wrapper">
                 <span>修改快捷方式</span>
                 <span>网址</span>
-                <input type="text" class="url-input">
+                <input  type="text" class="url-input" autofocus>
                 <div class="buttons">
                 <button class="delete">删除</button>
                 <button class="cancel">取消</button>
@@ -17,4 +17,6 @@ const renderOptions = () => {
 `).insertBefore($searchForm)
 }
 
-export {renderOptions}
+export {
+    renderOptions
+}

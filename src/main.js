@@ -1,11 +1,12 @@
-import {renderOptions} from './option'
+import {
+    renderOptions
+} from './option'
 
 const $siteList = $('.siteList')
 const $lastLi = $siteList.find('li.last')
 const x = localStorage.getItem('x')
 const xObject = JSON.parse(x)
-const hashMap = xObject || [
-    {
+const hashMap = xObject || [{
         logo: 'A',
         url: 'https://www.acfun.cn'
     },
@@ -16,11 +17,15 @@ const hashMap = xObject || [
 ]
 //对输入的字符串格式化
 const simplifyUrl = (url) => {
-    return url.replace('http://', '').replace('https://', '').replace('www.', '').replace(/\/.*/, '')
+    return url.replace('http://', '').
+    replace('https://', '').replace('www.', '').
+    replace(/\/.*/, '')
 }
 
 const render = () => {
-    $siteList.find('li:not(.last').remove()
+    //渲染之前先删除已添加的节点重新渲染
+    $siteList.find('li:not(.last)').remove()
+    //每次渲染都遍历hash
     hashMap.forEach((node, index) => {
         const $newLi = $(`
     <li>
@@ -38,31 +43,38 @@ const render = () => {
             window.open(node.url)
         })
         //关闭弹框
-        const closeOptions = $('.visible').css('display', 'none')
+        const closeOptions = () => {
+            $('.visible').remove()
+        }
         //删除
         $newLi.on('click', '.options', (e) => {
             //弹出对话框并且使遮罩显示
             renderOptions()
             e.stopPropagation();
             $('.delete').on('click', () => {
-                closeOptions
+                closeOptions()
                 confirm('确认删除？') ? hashMap.splice(index, 1) : null
                 render()
             })
             $('.cancel').on('click', () => {
-                closeOptions
+                closeOptions()
                 render()
             })
+           
             let updateUrl = () => {
-                //先获取现有的快捷方式，再修改
-                let url = $('.url-input').val()
+                //先获取input的输入
+                let input=$('.url-input')
+                let url=input.val()
+                console.log($('.url-input'))
                 if (url) {
-                    hashMap[index].logo = simplifyUrl(url)[0].toUpperCase()
                     if (url.indexOf('http') !== 0) {
                         url = 'https://' + url
                     }
+                    hashMap[index].logo = simplifyUrl(url)[0].toUpperCase()
                     hashMap[index].url = url
-                    closeOptions
+                    input.remove(0)
+                    console.log(hashMap)
+                    closeOptions()
                     render()
                 } else {
                     alert('未输入网址！')
@@ -123,4 +135,3 @@ $(document).on('keypress', (e) => {
         }
     }
 })
-
