@@ -1,27 +1,65 @@
 import {
     renderOptions
 } from './option'
+import {simplifyUrl} from './utils'
 
 const $siteList = $('.siteList')
 const $lastLi = $siteList.find('li.last')
 const x = localStorage.getItem('x')
 const xObject = JSON.parse(x)
-const hashMap = xObject || [{
-        logo: 'A',
-        url: 'https://www.acfun.cn'
-    },
-    {
-        logo: 'B',
-        url: 'https://www.bilibili.com'
-    }
-]
-//对输入的字符串格式化
-const simplifyUrl = (url) => {
-    return url.replace('http://', '').
-    replace('https://', '').replace('www.', '').
-    replace(/\/.*/, '')
+let hashMap=[]
+if(!x||xObject.length===0){
+    hashMap=[
+        {
+            logo: 'L',
+            url: 'https://github.com/Jarrett817/lazyer-ui'
+        },
+        {
+            logo: 'M',
+            url: 'https://github.com/Jarrett817/money-lover'
+        },
+        {
+            logo: 'M',
+            url: 'https://github.com/Jarrett817/madara-cat'
+        },
+        {
+            logo: 'R',
+            url: 'https://github.com/Jarrett817/rotating-cube'
+        },
+        {
+            logo: 'C',
+            url: 'https://github.com/Jarrett817/canvas-demo'
+        },
+        {
+            logo: 'C',
+            url: 'https://github.com/Jarrett817/CV-01'
+        }
+    ]
+}else{
+    hashMap=xObject
 }
-
+//关闭弹框
+const closeOptions = () => {
+    $('.visible').remove()
+}
+let updateUrl = (index) => {
+    //先获取input的输入
+    let input = $('.url-input')
+    let url = input.val()
+    if (!url) {
+        alert('未输入网址！')
+    } else {
+        if (url.indexOf('http') !== 0) {
+            url = 'https://' + url
+        }
+        hashMap[index].logo = simplifyUrl(url)[0].toUpperCase()
+        hashMap[index].url = url
+        input.remove(0)
+        console.log(hashMap)
+        closeOptions()
+        render()
+    }
+}
 const render = () => {
     //渲染之前先删除已添加的节点重新渲染
     $siteList.find('li:not(.last)').remove()
@@ -42,15 +80,12 @@ const render = () => {
         $newLi.on('click', () => {
             window.open(node.url)
         })
-        //关闭弹框
-        const closeOptions = () => {
-            $('.visible').remove()
-        }
-        //删除
+
         $newLi.on('click', '.options', (e) => {
             //弹出对话框并且使遮罩显示
             renderOptions()
             e.stopPropagation();
+            //删除
             $('.delete').on('click', () => {
                 closeOptions()
                 confirm('确认删除？') ? hashMap.splice(index, 1) : null
@@ -60,41 +95,18 @@ const render = () => {
                 closeOptions()
                 render()
             })
-           
-            let updateUrl = () => {
-                //先获取input的输入
-                let input=$('.url-input')
-                let url=input.val()
-                console.log($('.url-input'))
-                if (url) {
-                    if (url.indexOf('http') !== 0) {
-                        url = 'https://' + url
-                    }
-                    hashMap[index].logo = simplifyUrl(url)[0].toUpperCase()
-                    hashMap[index].url = url
-                    input.remove(0)
-                    console.log(hashMap)
-                    closeOptions()
-                    render()
-                } else {
-                    alert('未输入网址！')
-                    return
-                }
-            }
 
             $('.ok').on('click', () => {
-                updateUrl()
+                updateUrl(index)
             })
             $('.option-wrapper').on('keypress', (e) => {
                 const {
                     key
                 } = e
                 if (key === 'Enter') {
-                    updateUrl()
+                    updateUrl(index)
                 }
             })
-
-
         })
     })
 
@@ -102,19 +114,19 @@ const render = () => {
 render()
 
 $('.addButton').on('click', () => {
-    let url = window.prompt('请输入你要添加的网站')
-    if (!url) {
+    let url = $.trim(window.prompt('请输入你要添加的网站'))
+    if (url) {
+        if (url.indexOf('http') !== 0) {
+            url = 'https://' + url
+        }
+        hashMap.push({
+            logo: simplifyUrl(url)[0].toUpperCase(),
+            url: url
+        })
+        render()
+    } else {
         alert('未输入网址！！')
-        return
     }
-    if (url.indexOf('http') !== 0) {
-        url = 'https://' + url
-    }
-    hashMap.push({
-        logo: simplifyUrl(url)[0].toUpperCase(),
-        url: url
-    })
-    render()
 })
 //关闭前保存
 window.onbeforeunload = () => {

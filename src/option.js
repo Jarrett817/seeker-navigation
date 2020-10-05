@@ -1,6 +1,6 @@
 const $searchForm = $('.searchForm')
-const renderOptions = () => {
-    const $option = $(`
+const renderOptions = (hashMap, index) => {
+    $(`
             <div class="visible">
              <div class="shade"></div>
              <div class="option-wrapper">
@@ -16,7 +16,6 @@ const renderOptions = () => {
             </div>
 `).insertBefore($searchForm)
 }
-
 export {
     renderOptions
 }

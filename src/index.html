@@ -9,16 +9,17 @@
     <title>seeker</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="option.css">
+    <link rel="stylesheet" href="reset.css">
 </head>
 
 <body>
+<div class="total-wrapper">
     <header class="nav-header">
         <form class="searchForm" method="get" action="https://www.baidu.com/s">
             <input name='wd' type="text">
             <button type="submit">
-
                 <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-search"></use>
+                    <use xlink:href="#icon-sousuo"></use>
                 </svg>
             </button>
         </form>
@@ -27,23 +28,17 @@
         <ul class="siteList">
             <li class="last">
                 <div class="addButton">
-                    <div class="icon-wrapper">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-icon-add"></use>
-                        </svg>
-                    </div>
+                    <span>+</span>
                     <div class="text">新增快捷方式</div>
                 </div>
             </li>
         </ul>
     </main>
-    <footer class="nav-footer">
-
-    </footer>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="//at.alicdn.com/t/font_2003014_ntpxzll4lf.js"></script>
-    <script src="main.js"></script>
-    <script src="option.js"></script>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//at.alicdn.com/t/font_2003014_fxgw60p3mu9.js"></script>
+<script src="main.js"></script>
+<script src="option.js"></script>
 
 </body>
 
