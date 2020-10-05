@@ -7,57 +7,36 @@ const $siteList = $('.siteList')
 const $lastLi = $siteList.find('li.last')
 const x = localStorage.getItem('x')
 let xObject = JSON.parse(x)
-if(xObject&&xObject.length===0){
-    xObject=null
+if (xObject && xObject.length === 0) {
+    xObject = null
 }
-let hashMap=xObject||[
-        {
-            logo: 'L',
-            url: 'https://github.com/Jarrett817/lazyer-ui'
-        },
-        {
-            logo: 'M',
-            url: 'https://github.com/Jarrett817/money-lover'
-        },
-        {
-            logo: 'M',
-            url: 'https://github.com/Jarrett817/madara-cat'
-        },
-        {
-            logo: 'R',
-            url: 'https://github.com/Jarrett817/rotating-cube'
-        },
-        {
-            logo: 'C',
-            url: 'https://github.com/Jarrett817/canvas-demo'
-        },
-        {
-            logo: 'C',
-            url: 'https://github.com/Jarrett817/CV-01'
-        }
-    ]
-//关闭弹框
-const closeOptions = () => {
-    $('.visible').remove()
-}
-let updateUrl = (index) => {
-    //先获取input的输入
-    let input = $('.url-input')
-    let url = input.val()
-    if (!url) {
-        alert('未输入网址！')
-    } else {
-        if (url.indexOf('http') !== 0) {
-            url = 'https://' + url
-        }
-        hashMap[index].logo = simplifyUrl(url)[0].toUpperCase()
-        hashMap[index].url = url
-        input.remove(0)
-        console.log(hashMap)
-        closeOptions()
-        render()
+let hashMap = xObject || [
+    {
+        logo: 'L',
+        url: 'https://github.com/Jarrett817/lazyer-ui'
+    },
+    {
+        logo: 'M',
+        url: 'https://github.com/Jarrett817/money-lover'
+    },
+    {
+        logo: 'M',
+        url: 'https://github.com/Jarrett817/madara-cat'
+    },
+    {
+        logo: 'R',
+        url: 'https://github.com/Jarrett817/rotating-cube'
+    },
+    {
+        logo: 'C',
+        url: 'https://github.com/Jarrett817/canvas-demo'
+    },
+    {
+        logo: 'C',
+        url: 'https://github.com/Jarrett817/CV-01'
     }
-}
+]
+
 const render = () => {
     //渲染之前先删除已添加的节点重新渲染
     $siteList.find('li:not(.last)').remove()
@@ -78,36 +57,12 @@ const render = () => {
         $newLi.on('click', () => {
             window.open(node.url)
         })
-
         $newLi.on('click', '.options', (e) => {
             //弹出对话框并且使遮罩显示
-            renderOptions()
+            renderOptions(render, hashMap, index)
             e.stopPropagation();
-            //删除
-            $('.delete').on('click', () => {
-                closeOptions()
-                confirm('确认删除？') ? hashMap.splice(index, 1) : null
-                render()
-            })
-            $('.cancel').on('click', () => {
-                closeOptions()
-                render()
-            })
-
-            $('.ok').on('click', () => {
-                updateUrl(index)
-            })
-            $('.option-wrapper').on('keypress', (e) => {
-                const {
-                    key
-                } = e
-                if (key === 'Enter') {
-                    updateUrl(index)
-                }
-            })
         })
     })
-
 }
 render()
 
