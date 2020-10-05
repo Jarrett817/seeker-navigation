@@ -117,19 +117,82 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"i8is":[function(require,module,exports) {
+})({"FOZT":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.simplifyUrl = void 0;
+
+//对输入的字符串格式化
+var simplifyUrl = function simplifyUrl(url) {
+  return url.replace('http://', '').replace('https://', '').replace('www.', '').replace(/\/.*/, '');
+};
+
+exports.simplifyUrl = simplifyUrl;
+},{}],"i8is":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderOptions = void 0;
+
+var _utils = require("./utils");
+
 var $searchForm = $('.searchForm');
 
-var renderOptions = function renderOptions(hashMap, index) {
-  $("\n            <div class=\"visible\">\n             <div class=\"shade\"></div>\n             <div class=\"option-wrapper\">\n                <span>\u4FEE\u6539\u5FEB\u6377\u65B9\u5F0F</span>\n                <span>\u7F51\u5740</span>\n                <input  type=\"text\" class=\"url-input\" autofocus>\n                <div class=\"buttons\">\n                <button class=\"delete\">\u5220\u9664</button>\n                <button class=\"cancel\">\u53D6\u6D88</button>\n                <button class=\"ok\">\u5B8C\u6210</button>\n                </div>\n            </div>\n            </div>\n").insertBefore($searchForm);
+var renderOptions = function renderOptions(render, hashMap, index) {
+  $("\n            <div class=\"visible\">\n             <div class=\"shade\"></div>\n             <div class=\"option-wrapper\">\n                <span>\u4FEE\u6539\u5FEB\u6377\u65B9\u5F0F</span>\n                <span>\u7F51\u5740</span>\n                <input  type=\"text\" class=\"url-input\" autofocus>\n                <div class=\"buttons\">\n                <button class=\"delete\">\u5220\u9664</button>\n                <button class=\"cancel\">\u53D6\u6D88</button>\n                <button class=\"ok\">\u5B8C\u6210</button>\n                </div>\n            </div>\n            </div>\n").insertBefore($searchForm); //关闭弹框
+
+  var closeOptions = function closeOptions() {
+    $('.visible').remove();
+  };
+
+  var updateUrl = function updateUrl(index) {
+    //先获取input的输入
+    var input = $('.url-input');
+    var url = input.val();
+
+    if (!url) {
+      alert('未输入网址！');
+    } else {
+      if (url.indexOf('http') !== 0) {
+        url = 'https://' + url;
+      }
+
+      hashMap[index].logo = (0, _utils.simplifyUrl)(url)[0].toUpperCase();
+      hashMap[index].url = url;
+      input.remove(0);
+      console.log(hashMap);
+      closeOptions();
+      render();
+    }
+  }; //删除
+
+
+  $('.delete').on('click', function () {
+    closeOptions();
+    confirm('确认删除？') ? hashMap.splice(index, 1) : null;
+    render();
+  });
+  $('.cancel').on('click', function () {
+    closeOptions();
+    render();
+  });
+  $('.ok').on('click', function () {
+    updateUrl(index);
+  });
+  $('.option-wrapper').on('keypress', function (e) {
+    var key = e.key;
+
+    if (key === 'Enter') {
+      updateUrl(index);
+    }
+  });
 };
 
 exports.renderOptions = renderOptions;
-},{}]},{},["i8is"], null)
-//# sourceMappingURL=option.7fc07ffd.js.map
+},{"./utils":"FOZT"}]},{},["i8is"], null)
+//# sourceMappingURL=option.0fe6e579.js.map
