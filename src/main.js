@@ -12,28 +12,20 @@ if (xObject && xObject.length === 0) {
 }
 let hashMap = xObject || [
     {
-        logo: 'L',
-        url: 'https://github.com/Jarrett817/lazyer-ui'
+        logo: 'G',
+        url: 'https://github.com/'
     },
     {
-        logo: 'M',
-        url: 'https://github.com/Jarrett817/money-lover'
+        logo: 'G',
+        url: 'https://gitee.com/'
     },
     {
-        logo: 'M',
-        url: 'https://github.com/Jarrett817/madara-cat'
+        logo: 'J',
+        url: 'https://juejin.im'
     },
     {
-        logo: 'R',
-        url: 'https://github.com/Jarrett817/rotating-cube'
-    },
-    {
-        logo: 'C',
-        url: 'https://github.com/Jarrett817/canvas-demo'
-    },
-    {
-        logo: 'C',
-        url: 'https://github.com/Jarrett817/CV-01'
+        logo: 'Z',
+        url: 'https://www.zhihu.com/'
     }
 ]
 
