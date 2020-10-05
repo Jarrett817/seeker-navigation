@@ -1,0 +1,35 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+input:focus {
+    outline: 0;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+body {
+    background: #ededed;
+    max-height: 100vh;
+}
+
+
+/*# sourceMappingURL=reset.f0a3b085.css.map */

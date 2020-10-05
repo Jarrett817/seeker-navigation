@@ -126,30 +126,84 @@ Object.defineProperty(exports, "__esModule", {
 exports.renderOptions = void 0;
 var $searchForm = $('.searchForm');
 
-var renderOptions = function renderOptions() {
-  var $option = $("\n            <div class=\"visible\">\n             <div class=\"shade\"></div>\n             <div class=\"option-wrapper\">\n                <span>\u4FEE\u6539\u5FEB\u6377\u65B9\u5F0F</span>\n                <span>\u7F51\u5740</span>\n                <input  type=\"text\" class=\"url-input\" autofocus>\n                <div class=\"buttons\">\n                <button class=\"delete\">\u5220\u9664</button>\n                <button class=\"cancel\">\u53D6\u6D88</button>\n                <button class=\"ok\">\u5B8C\u6210</button>\n                </div>\n            </div>\n            </div>\n").insertBefore($searchForm);
+var renderOptions = function renderOptions(hashMap, index) {
+  $("\n            <div class=\"visible\">\n             <div class=\"shade\"></div>\n             <div class=\"option-wrapper\">\n                <span>\u4FEE\u6539\u5FEB\u6377\u65B9\u5F0F</span>\n                <span>\u7F51\u5740</span>\n                <input  type=\"text\" class=\"url-input\" autofocus>\n                <div class=\"buttons\">\n                <button class=\"delete\">\u5220\u9664</button>\n                <button class=\"cancel\">\u53D6\u6D88</button>\n                <button class=\"ok\">\u5B8C\u6210</button>\n                </div>\n            </div>\n            </div>\n").insertBefore($searchForm);
 };
 
 exports.renderOptions = renderOptions;
+},{}],"FOZT":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.simplifyUrl = void 0;
+
+//对输入的字符串格式化
+var simplifyUrl = function simplifyUrl(url) {
+  return url.replace('http://', '').replace('https://', '').replace('www.', '').replace(/\/.*/, '');
+};
+
+exports.simplifyUrl = simplifyUrl;
 },{}],"epB2":[function(require,module,exports) {
 "use strict";
 
 var _option = require("./option");
 
+var _utils = require("./utils");
+
 var $siteList = $('.siteList');
 var $lastLi = $siteList.find('li.last');
 var x = localStorage.getItem('x');
 var xObject = JSON.parse(x);
-var hashMap = xObject || [{
-  logo: 'A',
-  url: 'https://www.acfun.cn'
-}, {
-  logo: 'B',
-  url: 'https://www.bilibili.com'
-}]; //对输入的字符串格式化
 
-var simplifyUrl = function simplifyUrl(url) {
-  return url.replace('http://', '').replace('https://', '').replace('www.', '').replace(/\/.*/, '');
+if (xObject && xObject.length === 0) {
+  xObject = null;
+}
+
+var hashMap = xObject || [{
+  logo: 'L',
+  url: 'https://github.com/Jarrett817/lazyer-ui'
+}, {
+  logo: 'M',
+  url: 'https://github.com/Jarrett817/money-lover'
+}, {
+  logo: 'M',
+  url: 'https://github.com/Jarrett817/madara-cat'
+}, {
+  logo: 'R',
+  url: 'https://github.com/Jarrett817/rotating-cube'
+}, {
+  logo: 'C',
+  url: 'https://github.com/Jarrett817/canvas-demo'
+}, {
+  logo: 'C',
+  url: 'https://github.com/Jarrett817/CV-01'
+}]; //关闭弹框
+
+var closeOptions = function closeOptions() {
+  $('.visible').remove();
+};
+
+var updateUrl = function updateUrl(index) {
+  //先获取input的输入
+  var input = $('.url-input');
+  var url = input.val();
+
+  if (!url) {
+    alert('未输入网址！');
+  } else {
+    if (url.indexOf('http') !== 0) {
+      url = 'https://' + url;
+    }
+
+    hashMap[index].logo = (0, _utils.simplifyUrl)(url)[0].toUpperCase();
+    hashMap[index].url = url;
+    input.remove(0);
+    console.log(hashMap);
+    closeOptions();
+    render();
+  }
 };
 
 var render = function render() {
@@ -157,20 +211,15 @@ var render = function render() {
   $siteList.find('li:not(.last)').remove(); //每次渲染都遍历hash
 
   hashMap.forEach(function (node, index) {
-    var $newLi = $("\n    <li>\n    <div class=\"site\">\n      <div class=\"logo\">".concat(node.logo, "</div>\n        <div class=\"link\">").concat(simplifyUrl(node.url), "</div>\n          <div class=\"options\">\n            <svg class=\"icon\" aria-hidden=\"true\">\n              <use xlink:href=\"#icon-xuanxiang\"></use>\n            </svg>\n            </div>\n          </div>\n    </li>")).insertBefore($lastLi);
+    var $newLi = $("\n    <li>\n    <div class=\"site\">\n      <div class=\"logo\">".concat(node.logo, "</div>\n        <div class=\"link\">").concat((0, _utils.simplifyUrl)(node.url), "</div>\n          <div class=\"options\">\n            <svg class=\"icon\" aria-hidden=\"true\">\n              <use xlink:href=\"#icon-xuanxiang\"></use>\n            </svg>\n            </div>\n          </div>\n    </li>")).insertBefore($lastLi);
     $newLi.on('click', function () {
       window.open(node.url);
-    }); //关闭弹框
-
-    var closeOptions = function closeOptions() {
-      $('.visible').remove();
-    }; //删除
-
-
+    });
     $newLi.on('click', '.options', function (e) {
       //弹出对话框并且使遮罩显示
       (0, _option.renderOptions)();
-      e.stopPropagation();
+      e.stopPropagation(); //删除
+
       $('.delete').on('click', function () {
         closeOptions();
         confirm('确认删除？') ? hashMap.splice(index, 1) : null;
@@ -180,38 +229,14 @@ var render = function render() {
         closeOptions();
         render();
       });
-
-      var updateUrl = function updateUrl() {
-        //先获取input的输入
-        var input = $('.url-input');
-        var url = input.val();
-        console.log($('.url-input'));
-
-        if (url) {
-          if (url.indexOf('http') !== 0) {
-            url = 'https://' + url;
-          }
-
-          hashMap[index].logo = simplifyUrl(url)[0].toUpperCase();
-          hashMap[index].url = url;
-          input.remove(0);
-          console.log(hashMap);
-          closeOptions();
-          render();
-        } else {
-          alert('未输入网址！');
-          return;
-        }
-      };
-
       $('.ok').on('click', function () {
-        updateUrl();
+        updateUrl(index);
       });
       $('.option-wrapper').on('keypress', function (e) {
         var key = e.key;
 
         if (key === 'Enter') {
-          updateUrl();
+          updateUrl(index);
         }
       });
     });
@@ -220,22 +245,21 @@ var render = function render() {
 
 render();
 $('.addButton').on('click', function () {
-  var url = window.prompt('请输入你要添加的网站');
+  var url = $.trim(window.prompt('请输入你要添加的网站'));
 
-  if (!url) {
+  if (url) {
+    if (url.indexOf('http') !== 0) {
+      url = 'https://' + url;
+    }
+
+    hashMap.push({
+      logo: (0, _utils.simplifyUrl)(url)[0].toUpperCase(),
+      url: url
+    });
+    render();
+  } else {
     alert('未输入网址！！');
-    return;
   }
-
-  if (url.indexOf('http') !== 0) {
-    url = 'https://' + url;
-  }
-
-  hashMap.push({
-    logo: simplifyUrl(url)[0].toUpperCase(),
-    url: url
-  });
-  render();
 }); //关闭前保存
 
 window.onbeforeunload = function () {
@@ -256,5 +280,5 @@ $(document).on('keypress', function (e) {
     }
   }
 });
-},{"./option":"i8is"}]},{},["epB2"], null)
-//# sourceMappingURL=main.94804436.js.map
+},{"./option":"i8is","./utils":"FOZT"}]},{},["epB2"], null)
+//# sourceMappingURL=main.ccc7deb1.js.map

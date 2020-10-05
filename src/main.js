@@ -6,10 +6,11 @@ import {simplifyUrl} from './utils'
 const $siteList = $('.siteList')
 const $lastLi = $siteList.find('li.last')
 const x = localStorage.getItem('x')
-const xObject = JSON.parse(x)
-let hashMap=[]
-if(!x||xObject.length===0){
-    hashMap=[
+let xObject = JSON.parse(x)
+if(xObject&&xObject.length===0){
+    xObject=null
+}
+let hashMap=xObject||[
         {
             logo: 'L',
             url: 'https://github.com/Jarrett817/lazyer-ui'
@@ -35,9 +36,6 @@ if(!x||xObject.length===0){
             url: 'https://github.com/Jarrett817/CV-01'
         }
     ]
-}else{
-    hashMap=xObject
-}
 //关闭弹框
 const closeOptions = () => {
     $('.visible').remove()
