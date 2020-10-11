@@ -268,7 +268,7 @@ window.onbeforeunload = function () {
 $(document).on('keypress', function (e) {
   var key = e.key;
 
-  if ($('.visible')) {
+  if ($('.visible').length !== 0) {
     return;
   }
 
@@ -279,4 +279,4 @@ $(document).on('keypress', function (e) {
   }
 });
 },{"./option":"i8is","./utils":"FOZT"}]},{},["epB2"], null)
-//# sourceMappingURL=main.8d79f7bb.js.map
+//# sourceMappingURL=main.9b2906da.js.map
